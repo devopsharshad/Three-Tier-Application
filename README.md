@@ -10,16 +10,36 @@ This project sets up a full three-tier architecture on AWS using Terraform — i
 ```
 Three-Tier-Application/
 │
-├── main.tf
-├── vpc.tf
-├── subnet.tf
-├── ec2.tf
 ├── alb.tf
-├── rds.tf
-├── variables.tf
+├── data.sh
+├── database_sg.tf
+├── ec2.tf
+├── igw.tf
 ├── outputs.tf
-└── README.md
+├── provider.tf
+├── rds.tf
+├── route_table.tf
+├── subnet.tf
+├── vars.tf
+├── vpc.tf
+├── web_sg.tf
 ```
+
+| File              | Description |
+|-------------------|-------------|
+| `alb.tf`          | Defines the Application Load Balancer and target group configuration. |
+| `data.sh`         | Startup script for EC2 instances. |
+| `database_sg.tf`  | Security Group for the RDS database allowing only internal access. |
+| `ec2.tf`          | Launch configuration for web and app EC2 instances. |
+| `igw.tf`          | Configures the Internet Gateway to allow internet access to public subnets. |
+| `outputs.tf`      | Outputs values like ALB DNS or RDS endpoint. |
+| `provider.tf`     | Declares the AWS provider and region. |
+| `rds.tf`          | Provisions the MySQL RDS instance and its subnet group. |
+| `route_table.tf`  | Route tables for public/private subnet traffic flow. |
+| `subnet.tf`       | Creates public and private subnets across multiple AZs. |
+| `vars.tf`         | Variable definitions (e.g., AMI ID, key name, region). |
+| `vpc.tf`          | Defines the VPC and associated settings (CIDR, DNS, etc.). |
+| `web_sg.tf`       | Security Group for web and app servers, including ALB access. |
 
 ---
 
@@ -62,12 +82,6 @@ with
 
 ```hcl
 key_name = "your-key-name"
-```
-
-To locate all such occurrences in PowerShell:
-
-```powershell
-Get-ChildItem -Recurse -Include *.tf | Select-String -Pattern 'key_name'
 ```
 
 ---
